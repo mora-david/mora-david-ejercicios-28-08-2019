@@ -21,7 +21,7 @@
                             <button 
                             :class="list.status == 'creating' ? 'btn-warning' : 'btn-danger'"
                             class="btn btn-sm"
-                            >
+                            @click="removeList(index)">
                             {{ list.status == 'creating' ? 'cancelar' : 'eliminar'}}
                                 
                             </button>
@@ -36,7 +36,18 @@
                                 Guardar
                             </button>
                             <div v-for="(card, index) in list.cards">
-                            <p>{{index+1}}   {{ list.cards[index]}}</p>
+                                <p v-if="list.cards[index].status == 'ok'">{{index}} {{list.cards[index].name}}</p>
+                                <form @submit.prevent="editlist(list)" action="/">
+                                    <div class="form-group" >
+                                        <input class="form-control" placeholder="Editar Item" v-model="list.cards[index].name" v-if="list.cards[index].status == 'no'">
+                                    </div>
+                                    <button @click="editlist(list, index)">
+                                            {{ list.cards[index].status == 'ok' ? 'edit' : 'guardar'}}
+                                       
+                                        </button>
+
+                                    </form>
+
                         </div>
                         </form>
                         <form @submit.prevent="saveCard(list)" action="/">
@@ -45,6 +56,7 @@
                             </div>
                             <button class="btn btn-primary btn-block">
                                 Agregar
+                            </button>
                             </form>
 
                     </div>

@@ -9,7 +9,8 @@ el: '#app',
                 name:'',
                 status: 'creating',
                 cards: [],
-                card: ""
+                card: "",
+                edit: "non"
             }
             this.lists.push(newList)
         },
@@ -20,10 +21,23 @@ el: '#app',
             this.lists.splice(index, 1)
         },
         saveCard(list){
-            const card1 = list.card;
+            const card1={
+                name: list.card,
+                status: "ok",
+            }
             list.cards.push(card1)
             list.card = ""
         },
+        editlist(list, index){
+           //list.cards[index].status = "no"
+          if(list.cards[index].status == "no"){
+            list.cards[index].status = "ok"
+          }
+          else if(list.cards[index].status == "ok"){
+            list.cards[index].status = "no"
+          }
+            }
+        },
 
     }
-})
+)
