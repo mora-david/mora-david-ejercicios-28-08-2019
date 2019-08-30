@@ -28,7 +28,7 @@ el: '#app',
             list.cards.push(card1)
             list.card = ""
         },
-        editlist(list, index){
+        editcards(list, index){
            //list.cards[index].status = "no"
           if(list.cards[index].status == "no"){
             list.cards[index].status = "ok"
@@ -36,6 +36,13 @@ el: '#app',
           else if(list.cards[index].status == "ok"){
             list.cards[index].status = "no"
           }
+            },
+            delateCards(list, index){
+                list.cards.splice(index, 1)
+            },
+            editNameList(list){
+                list.status = 'creating'
+                
             }
         },
 

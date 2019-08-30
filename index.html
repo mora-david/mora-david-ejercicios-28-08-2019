@@ -23,38 +23,43 @@
                             class="btn btn-sm"
                             @click="removeList(index)">
                             {{ list.status == 'creating' ? 'cancelar' : 'eliminar'}}
-                                
+                            </button>
+                            <button @click="editNameList(list)">
+                                editar
                             </button>
                         </div>
                     </div>
                     <div class="card-body">
                         <form @submit.prevent="SaveList(list)" action="/">
                             <div class="form-group" v-if="list.status != saved">
-                                <input class="form-control" placeholder="Nombre de la lista" v-model="list.name">
+                                <input class="form-control" placeholder="Nombre de la lista" v-model="list.name" v-if="list.status == 'creating'">
                             </div>
                             <button class="btn btn-primary btn-block" v-if="list.status == 'creating'">
                                 Guardar
                             </button>
                             <div v-for="(card, index) in list.cards">
-                                <p v-if="list.cards[index].status == 'ok'">{{index}} {{list.cards[index].name}}</p>
-                                <form @submit.prevent="editlist(list)" action="/">
+                                <p v-if="list.cards[index].status == 'ok'" style="margin-bottom:0;">{{index + 1}} {{list.cards[index].name}}</p>
+                                <form @submit.prevent="editcards(list) delateCards(list, index)" action="/">
                                     <div class="form-group" >
                                         <input class="form-control" placeholder="Editar Item" v-model="list.cards[index].name" v-if="list.cards[index].status == 'no'">
                                     </div>
-                                    <button @click="editlist(list, index)">
+                                    <button @click="editcards(list, index)"class="btn btn-primary btn btn-sm">
                                             {{ list.cards[index].status == 'ok' ? 'edit' : 'guardar'}}
                                        
+                                        </button>
+                                        <button @click="delateCards(list, index)" class="btn-danger btn btn-sm">
+                                            eliminar
                                         </button>
 
                                     </form>
 
                         </div>
                         </form>
-                        <form @submit.prevent="saveCard(list)" action="/">
-                            <div class="form-group" >
-                                <input class="form-control" placeholder="Agregar Item" v-model="list.card">
+                        <form @submit.prevent="saveCard(list)" action="/" style="margin-bottom:0;">
+                            <div class="form-group" style="margin-bottom:0">
+                                <input class="form-control" placeholder="Agregar Item" v-model="list.card" v-if="list.status == 'saved'">
                             </div>
-                            <button class="btn btn-primary btn-block">
+                            <button class=" btn-block btn btn-success" v-if="list.status == 'saved'">
                                 Agregar
                             </button>
                             </form>
